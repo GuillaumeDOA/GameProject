@@ -9,8 +9,8 @@
     <ProjectGuid>{B069C429-803B-4C94-A6E9-84FCC12983CE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>_710_InLes</RootNamespace>
-    <AssemblyName>710_InLes</AssemblyName>
+    <RootNamespace>GameProject</RootNamespace>
+    <AssemblyName>GameProject</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>

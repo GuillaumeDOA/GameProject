@@ -1,7 +1,7 @@
 ﻿using System;
 
-namespace _710_InLes
-{
+namespace _GameProject
+{ 
 #if WINDOWS || LINUX
     /// <summary>
     /// The main class.

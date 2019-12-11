@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _710_InLes
+namespace _GameProject
 {
     class Player
     {
