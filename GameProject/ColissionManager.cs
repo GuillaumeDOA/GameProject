@@ -14,14 +14,10 @@ namespace GameProject
                 return true;
             return false;
         }
-        public bool Update(Player p1, Block[] ground)
+        public bool Update(Player p1, Block ground)
         {
-            for (int i = 0; i < ground.Length; i++)
-            {
-                if (p1.CollisionRectangle.Intersects(ground[i].CollisionRectangle))
-                    return true;
-                return false;
-            }
+            if (p1.CollisionRectangle.Intersects(ground.CollisionRectangle))
+                return true;
             return false;
         }
     }

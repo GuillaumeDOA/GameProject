@@ -16,18 +16,19 @@ namespace GameProject
         Animation currentAnimation;
         Remote remote;
         public Rectangle CollisionRectangle;
-        bool hasJumped;
+        public bool hasJumped;
 
         public Player(Vector2 _position, Texture2D _textureRL,Texture2D _textureRR, Texture2D _textureIL, Texture2D _textureIR, Remote keyBoard)
         {
-            Init(_position, keyBoard);
             RunRight = _textureRR;
             RunLeft = _textureRL;
             IdleLeft = _textureIL;
             IdleRight = _textureIR;
             currentTexture = IdleRight;
+            Init(_position, keyBoard);
 
-            hasJumped = true;
+
+            hasJumped = false;
             remote = keyBoard;
 
             CreateAnimationLeftRight();
@@ -103,7 +104,8 @@ namespace GameProject
             if (remote.left)
             {
                 //position = Vector2.Add(position, new Vector2(-2, 0));
-                velocity.X = -3f;
+                velocity.X = -2f;
+                position.X += velocity.X;
                 currentAnimation = animationLeft;
                 currentTexture = RunLeft;
             }
@@ -111,20 +113,23 @@ namespace GameProject
             if (remote.right)
             {
                 //position = Vector2.Add(position, new Vector2(2, 0));
-                velocity.X = 3f;
+                velocity.X = 2f;
+                position.X += velocity.X;
                 currentTexture = RunRight;
                 currentAnimation = animationRight;
             }
             if (remote.jump && hasJumped==false)
             {
-                position.Y -= 10f;
-                velocity.Y = -5f;
+                position.Y -= 8f;
+                velocity.Y = -4f;
+                position.Y -= velocity.Y;
                 hasJumped = true;
             }
             if (hasJumped == true)
             {
                 float i = 1;
-                velocity.Y += 0.15f * 1;
+                velocity.Y += 0.15f * i;
+                position.Y += velocity.Y;
             }
             if (hasJumped == false)
                 velocity.Y = 0f;

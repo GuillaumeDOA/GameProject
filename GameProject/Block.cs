@@ -17,12 +17,13 @@ namespace GameProject
         public Block(Texture2D texture)
         {
             _texture = texture;
-            CollisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 158, 31);
+            CollisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height);
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-
+            CollisionRectangle.X = (int)Position.X;
+            CollisionRectangle.Y = (int)Position.Y;
         }
 
         public void Draw(SpriteBatch spriteBatch)

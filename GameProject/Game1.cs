@@ -12,7 +12,7 @@ namespace GameProject
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player1;
-        ColissionManager colissionmanager = new ColissionManager();
+        ColissionManager colissionmanager;
         Texture2D background;
         Rectangle mainFrame;
         private int GameWidth=768, GameHeight=432;
@@ -68,6 +68,7 @@ namespace GameProject
             }
 
             player1 = new Player(new Vector2(200, 350), RunRight, RunLeft, IdleRight, IdleLeft, pad1);
+            colissionmanager = new ColissionManager();
         }
 
         /// <summary>
@@ -86,13 +87,20 @@ namespace GameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if(colissionmanager.Update(player1,Floor))
+            for (int i = 0; i < Floor.Length; i++)
+            {
+                Floor[i].Update(gameTime);
+                if (colissionmanager.Update(player1, Floor[i]))
+                    player1.hasJumped = false;
+            }
+            
             
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
 
             player1.Update(gameTime);
+            
             
 
             base.Update(gameTime);
