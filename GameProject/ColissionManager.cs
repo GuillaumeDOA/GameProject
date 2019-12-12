@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _GameProject
+namespace GameProject
 {
     class ColissionManager
     {
@@ -12,6 +12,16 @@ namespace _GameProject
         {
             if (p1.CollisionRectangle.Intersects(p2.CollisionRectangle))
                 return true;
+            return false;
+        }
+        public bool Update(Player p1, Block[] ground)
+        {
+            for (int i = 0; i < ground.Length; i++)
+            {
+                if (p1.CollisionRectangle.Intersects(ground[i].CollisionRectangle))
+                    return true;
+                return false;
+            }
             return false;
         }
     }

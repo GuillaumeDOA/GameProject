@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _GameProject
+namespace GameProject
 { 
 #if WINDOWS || LINUX
     /// <summary>

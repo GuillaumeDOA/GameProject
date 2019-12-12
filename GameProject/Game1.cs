@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace _GameProject
+namespace GameProject
 {
     /// <summary>
     /// This is the main type for your game.
@@ -12,14 +12,20 @@ namespace _GameProject
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player1;
-        Player player2;
         ColissionManager colissionmanager = new ColissionManager();
         Texture2D background;
         Rectangle mainFrame;
+        private int GameWidth=768, GameHeight=432;
+
+        private Block[] Floor = new Block[6];
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = GameHeight;
+            graphics.PreferredBackBufferWidth = GameWidth;
+            graphics.ApplyChanges();
             Content.RootDirectory = "Content";
         }
 
@@ -51,11 +57,17 @@ namespace _GameProject
             Texture2D IdleRight = Content.Load<Texture2D>("IdleRight");
             Texture2D RunLeft = Content.Load<Texture2D>("RunLeft");
             Texture2D IdleLeft = Content.Load<Texture2D>("IdleLeft");
-            Remote pad1 = new KeyBoard() { leftk = Keys.Left, rightk = Keys.Right };
-            Remote pad2 = new KeyBoard() { leftk = Keys.Q, rightk = Keys.D };
+            Remote pad1 = new KeyBoard() { leftk = Keys.Q, rightk = Keys.D, jumpk = Keys.Space };
+            Texture2D ground = Content.Load<Texture2D>("Floor");
+            int x = 0;
+            for (int i = 0; i < Floor.Length; i++)
+            {
+                Floor[i] = new Block(ground);
+                Floor[i].Position = new Vector2(x, 383);
+                x += 158;
+            }
 
             player1 = new Player(new Vector2(200, 350), RunRight, RunLeft, IdleRight, IdleLeft, pad1);
-            player2 = new Player(new Vector2(50, 350), RunRight, RunLeft, IdleRight, IdleLeft, pad2);
         }
 
         /// <summary>
@@ -74,17 +86,14 @@ namespace _GameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if(colissionmanager.Update(player1, player2))
-            {
-                Exit();
-            }
+            if(colissionmanager.Update(player1,Floor))
             
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
 
             player1.Update(gameTime);
-            player2.Update(gameTime);
+            
 
             base.Update(gameTime);
         }
@@ -105,7 +114,10 @@ namespace _GameProject
             spriteBatch.Draw(background,mainFrame,Color.White);
 
             player1.Draw(spriteBatch);
-            player2.Draw(spriteBatch);
+            for (int i = 0; i < Floor.Length; i++)
+            {
+                Floor[i].Draw(spriteBatch);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);

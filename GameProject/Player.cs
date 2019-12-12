@@ -6,16 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _GameProject
+namespace GameProject
 {
     class Player
     {
         private Texture2D RunLeft, RunRight,IdleLeft, IdleRight, currentTexture;
-        private Vector2 position, movement;
+        private Vector2 position, velocity;
         Animation animationLeft, animationRight, animationIdleLeft, AnimationIdleRight;
         Animation currentAnimation;
         Remote remote;
         public Rectangle CollisionRectangle;
+        bool hasJumped;
 
         public Player(Vector2 _position, Texture2D _textureRL,Texture2D _textureRR, Texture2D _textureIL, Texture2D _textureIR, Remote keyBoard)
         {
@@ -26,6 +27,7 @@ namespace _GameProject
             IdleRight = _textureIR;
             currentTexture = IdleRight;
 
+            hasJumped = true;
             remote = keyBoard;
 
             CreateAnimationLeftRight();
@@ -100,20 +102,36 @@ namespace _GameProject
 
             if (remote.left)
             {
-                position = Vector2.Add(position, new Vector2(-2, 0));
+                //position = Vector2.Add(position, new Vector2(-2, 0));
+                velocity.X = -3f;
                 currentAnimation = animationLeft;
                 currentTexture = RunLeft;
             }
 
             if (remote.right)
             {
-                position = Vector2.Add(position, new Vector2(2, 0));
+                //position = Vector2.Add(position, new Vector2(2, 0));
+                velocity.X = 3f;
                 currentTexture = RunRight;
                 currentAnimation = animationRight;
             }
+            if (remote.jump && hasJumped==false)
+            {
+                position.Y -= 10f;
+                velocity.Y = -5f;
+                hasJumped = true;
+            }
+            if (hasJumped == true)
+            {
+                float i = 1;
+                velocity.Y += 0.15f * 1;
+            }
+            if (hasJumped == false)
+                velocity.Y = 0f;
 
             if (!remote.right && !remote.left)
             {
+                velocity.X = 0f;
                 if (currentAnimation == animationLeft)
                 {
                     currentAnimation = animationIdleLeft;

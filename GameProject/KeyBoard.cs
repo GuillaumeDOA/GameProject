@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _GameProject
+namespace GameProject
 {
     public abstract class Remote
     {
         public bool left { get; set; }
         public bool right { get; set; }
-        public bool up { get; set; }
-        public bool down { get; set; }
+        public bool jump { get; set; }
         public abstract void Update();
     }
 
@@ -28,8 +27,7 @@ namespace _GameProject
     {
         public Keys leftk { get; set; }
         public Keys rightk { get; set; }
-        public Keys upk { get; set; }
-        public Keys downk { get; set; }
+        public Keys jumpk { get; set; }
         public override void Update()
         {
             KeyboardState statekey = Keyboard.GetState();
@@ -41,6 +39,10 @@ namespace _GameProject
                 right = true;
             if (statekey.IsKeyUp(rightk))
                 right = false;
+            if (statekey.IsKeyDown(jumpk))
+                jump = true;
+            if (statekey.IsKeyUp(jumpk))
+                jump = false;
         }
     }
 }
